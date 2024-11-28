@@ -23,7 +23,7 @@ describe('HomeComponent', () => {
     })
 
     it('should include button', () => {
-        const buttonEl = fixture.debugElement.query(By.css('#btn'))
+        const buttonEl = fixture.debugElement.query(By.css('#btn1'))
         expect(buttonEl).toBeTruthy()
         expect(buttonEl.nativeElement.textContent).toContain('Click Me')
     })
