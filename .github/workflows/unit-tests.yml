@@ -13,4 +13,4 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Run Unit Tests
-        run: npm test
+        run: npm test -- --watch=false --browsers=ChromeHeadless
