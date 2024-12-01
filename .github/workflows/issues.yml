@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Output github context object to json
-        run: echo ${{toJson(github)}}
+        run: echo "${{toJson(github)}}"
       - name: Output github context object
-        run: echo ${{github}}
+        run: echo "${{github}}"
       - name: Output issue information
         run: |
-          echo Issue Title: ${{github.event.issue.title}}
-          echo Issue Body: ${{github.event.issue.body}}
-          echo Issue Number: ${{github.event.issue.number}}
+          echo Issue Title: "${{github.event.issue.title}}"
+          echo Issue Body: "${{github.event.issue.body}}"
+          echo Issue Number: "${{github.event.issue.number}}"
