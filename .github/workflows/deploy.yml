@@ -18,3 +18,5 @@ jobs:
                   ls
             - name: Install Dependencies
               run: npm ci
+            - name: Lint
+              run: npm run lint
