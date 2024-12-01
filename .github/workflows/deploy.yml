@@ -5,7 +5,7 @@ on:
             - practice01
     workflow_dispatch:
 jobs:
-    lint:
+    lint-test-build-deploy-job:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Code
@@ -22,3 +22,7 @@ jobs:
               run: npm run lint
             - name: Test
               run: npm run test
+            - name: Build
+              run: npm run build
+            - name: Deploy
+              run: echo Deploying...
