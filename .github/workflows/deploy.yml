@@ -1,0 +1,14 @@
+name: Lint, Build, Test, Deploy
+on:
+    push:
+        branches:
+            - practice01
+    workflow_dispatch:
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+            - name: Check PWD
+              run: pwd
