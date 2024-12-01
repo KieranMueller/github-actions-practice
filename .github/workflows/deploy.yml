@@ -8,6 +8,8 @@ jobs:
     lint:
         runs-on: ubuntu-latest
         steps:
+            - name: Attempt to run npm command
+              run: npm run dev
             - name: Checkout Code
               uses: actions/checkout@v4
             - name: Check PWD
