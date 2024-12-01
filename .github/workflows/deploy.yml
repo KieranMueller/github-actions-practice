@@ -1,11 +1,11 @@
-name: Lint, Build, Test, Deploy
+name: Lint, Build, Test, Deploy - Single Job Workflow
 on:
     push:
         branches:
             - practice01
     workflow_dispatch:
 jobs:
-    lint-test-build-deploy-job:
+    lint-test-build-deploy-single-job:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Code
