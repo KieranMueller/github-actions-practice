@@ -9,6 +9,7 @@ import { Component } from '@angular/core'
 })
 export class HomeComponent {
     alert() {
+        // comment
         alert('Hey there!')
     }
 }
