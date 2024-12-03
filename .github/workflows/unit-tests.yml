@@ -6,7 +6,7 @@ on:
       - ".github/workflows/unit-tests.yml"
   workflow_dispatch:
 jobs:
-  test:
+  test-build-artifact:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -22,9 +22,19 @@ jobs:
       - name: Build
         run: npm run build
       - name: Save Build Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: |
             dist
             README.md
+  deploy:
+    needs: test-build-artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+      - name: Deploy
+        run: echo Deploying...
