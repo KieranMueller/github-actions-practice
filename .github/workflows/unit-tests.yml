@@ -1,12 +1,14 @@
 name: Run Unit Tests
+
 on:
   push:
     branches: [main]
     paths-ignore:
       - ".github/workflows/unit-tests.yml"
   workflow_dispatch:
+
 jobs:
-  test-build-artifact:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -15,10 +17,39 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.0"
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: dependencies-${{hashFiles('**/package-lock.json')}}
+      - name: Install Dependencies
+        run: npm install
+
+  test:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: dependencies-${{hashFiles('**/package-lock.json')}}
       - name: Install Dependencies
         run: npm install
       - name: Run Unit Tests
         run: npm test -- --watch=false --browsers=ChromeHeadless
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: dependencies-${{hashFiles('**/package-lock.json')}}
+      - name: Install Dependencies
+        run: npm install
       - name: Build
         run: npm run build
       - name: Save Build Artifact
@@ -28,8 +59,9 @@ jobs:
           path: |
             dist
             README.md
+
   deploy:
-    needs: test-build-artifact
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Get Build Artifacts
