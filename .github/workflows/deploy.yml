@@ -21,10 +21,18 @@ jobs:
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: dependencies-${{hashFiles('**/package-lock.json')}}
+          path: |
+            ~/.npm
+            node_modules
+          key: dependencies-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: dependencies-
       - name: Install Dependencies
         run: npm install
+      - name: Upload node_modules Cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
   test:
     runs-on: ubuntu-latest
@@ -32,13 +40,10 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Cache Dependencies
-        uses: actions/cache@v4
+      - name: Download node_modules Cache
+        uses: actions/download-artifact@v4
         with:
-          path: ~/.npm
-          key: dependencies-${{hashFiles('**/package-lock.json')}}
-      - name: Install Dependencies
-        run: npm install
+          name: node_modules
       - name: Run Unit Tests
         run: npm test -- --watch=false --browsers=ChromeHeadless
 
@@ -48,13 +53,10 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Cache Dependencies
-        uses: actions/cache@v4
+      - name: Download node_modules Cache
+        uses: actions/download-artifact@v4
         with:
-          path: ~/.npm
-          key: dependencies-${{hashFiles('**/package-lock.json')}}
-      - name: Install Dependencies
-        run: npm install
+          name: node_modules
       - name: Build
         run: npm run build
       - name: Save Build Artifact
